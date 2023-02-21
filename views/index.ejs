@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <title>SheryMail|Register</title>
+</head>
+<style>
+  #alert,#alert2{
+    display: none;
+  }
+</style>
+<body class="bg-dark">
+  <div class="container card flex-column justify-content aling-items-start p-4 mt-3" style="width: 28rem;">
+    <h3 class="mb-4">Register Now..... <br> Welcome to SheryMail</h3>
+    <form method="post" action="/">
+      <div class="mb-4">
+        <label for="exampleInputEmail1" class="form-label">Full Name</label>
+        <input name="name" type="text" class="form-control" id="exampleInputEmail1" placeholder="Full Name" aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Username</label>
+        <input name="username" type="text" class="form-control" id="username" placeholder="username" aria-describedby="emailHelp">
+        <div id="alert" class="form-text">this username is not available</div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input name="email" type="email" class="form-control" id="email" placeholder="email address" aria-describedby="emailHelp">
+        <div id="alert2" class="form-text">this email is already in use</div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Mobile</label>
+        <input name="mobile" type="text" class="form-control" id="exampleInputEmail1" placeholder="mobile" aria-describedby="emailHelp">
+      </div>
+      
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" placeholder="Password" id="exampleInputPassword1">
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div>
+      <button type="submit" class="btn btn-primary mb-3">Register</button>
+    </form>
+    <a href="/login">Already have an account?</a>
+  </div>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script>
+  document.querySelector('#username').addEventListener('input',function(){
+    var that = this;
+    if(this.value.trim().length > 0){
+      axios.get(`/check/${this.value}`)
+      .then( function(userd){
+        if(userd.data.loggedinuser){
+          that.style.border = "2px solid red"
+          document.querySelector('#alert').style.display = 'initial'
+        }
+       else{
+        that.style.border = ''
+          document.querySelector('#alert').style.display = 'none'
+       } 
+      })
+    }
+  })
+ 
+  document.querySelector('#email').addEventListener('input',function(){
+    var that = this;
+    if(this.value.trim().length > 0){
+      axios.get(`/checke/${this.value}`)
+      .then(function(usere){
+        if(usere.data.loggemail){
+         that.style.border = "2px solid red"
+          document.querySelector('#alert2').style.display = 'initial'
+        }
+       else{
+        that.style.border = ''
+          document.querySelector('#alert2').style.display = 'none'
+       } 
+      })
+    }
+  })
+</script>
+</body>
+</html>
